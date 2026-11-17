@@ -1,0 +1,27 @@
+{
+	"key.category.serverlist.general": "Server List",
+	"key.serverlist.edit": "Edit Server",
+	"key.serverlist.delete": "Delete Server",
+	"key.serverlist.open": "Open Server List",
+
+	"serverlist.search": "Search Servers",
+	"serverlist.search.hint": "Search by name or address",
+
+	"options.serverlist.title": "Server List Settings",
+	"options.serverlist.section.serverList": "Server List",
+	"options.serverlist.section.pings": "Server Pings",
+	"options.serverlist.dragToReorder": "Drag to Reorder",
+	"options.serverlist.dragToReorder.tooltip": "Reorder saved servers by dragging them in the server list.",
+	"options.serverlist.searchBox": "Search Box",
+	"options.serverlist.searchBox.tooltip": "Show a search box above the server list's buttons. Takes effect the next time the server list is opened.",
+	"options.serverlist.showPingMs": "Show Latency",
+	"options.serverlist.showPingMs.tooltip": "Show each server's latency in milliseconds next to its player count.",
+	"options.serverlist.pauseMenuButton": "Pause Menu Button",
+	"options.serverlist.pauseMenuButton.tooltip": "Show a button in the pause menu that opens the server list.",
+	"options.serverlist.fasterServerPings": "Faster Pings",
+	"options.serverlist.fasterServerPings.tooltip": "Ping more servers at once, so slow or unreachable servers do not hold up the others. Vanilla pings at most five at a time.",
+	"options.serverlist.skipReverseDnsForIpAddresses": "Skip Reverse DNS for IPs",
+	"options.serverlist.skipReverseDnsForIpAddresses.tooltip": "Do not look up host names for servers entered as IP addresses. This can make pinging and joining them several seconds faster.",
+
+	"modmenu.descriptionTranslation.serverlist": "Makes the multiplayer server list more usable: drag-and-drop reordering, edit and delete shortcuts, search, faster pings, quick access from the pause menu, and a shared area on the server info screen for other mods."
+}

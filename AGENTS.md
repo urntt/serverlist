@@ -78,6 +78,9 @@ The mod version itself follows [Semantic Versioning](https://semver.org/); the `
 ### Testing
 
 - The client game tests in `src/gametest` start Minecraft and check every feature: drag-and-drop (including after returning from the Edit, Delete, and Add screens), the edit and delete bindings and their rebinding, the search filter and its reorder lock, the pause menu button, the open key, switching servers from in game, the ping changes, the extension area and its API, and the configuration. Keep them passing and extend them when behavior changes.
+- The tests use doubles from the test mod instead of real mods and networks: `TestServerInfoExtension` (a mod using the API), `ForeignServerInfoWidgetMixin` (a mod placing a widget by hand, like Essential), `FakeEssentialServerListMixin` (Essential's drag handler, switchable), and `SlowServerPingMixin` (servers whose pings hold a pinger thread, like a slow DNS lookup). Server-dependent tests run against one local dedicated server.
+- Test-writing notes: the test input API sends key events without modifiers, so send shortcuts such as Ctrl+F to `KeyboardHandler.keyPress` directly; opening a screen re-centers the cursor, so move it away after opening a screen and before a screenshot; wait about 7 ticks between mouse presses so they do not count as a double click; and use `TestSupport.useRoomyWindow` when every server or widget must be visible at once.
+- To check that the tests can fail, break one feature at a time (for example disable a mixin's effect or skip an event registration), run the tests, confirm the expected assertion fails, and restore the code.
 - After porting to a new Minecraft version, run the client game tests. A successful build does not prove that the mixins still have the intended effect.
 - `README.md` describes how to run them, including on a headless machine.
 

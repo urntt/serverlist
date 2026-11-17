@@ -1,0 +1,25 @@
+{
+	"required": true,
+	"package": "com.urntt.serverlist.mixin",
+	"compatibilityLevel": "JAVA_${java_version}",
+	"client": [
+		"JoinMultiplayerScreenAccessor",
+		"JoinMultiplayerScreenMixin",
+		"KeyBindsListKeyEntryMixin",
+		"ManageServerScreenAccessor",
+		"ManageServerScreenMixin",
+		"OnlineServerEntryAccessor",
+		"OnlineServerEntryMixin",
+		"PauseScreenMixin",
+		"ScreenChildrenAccessor",
+		"ServerNameResolverMixin",
+		"ServerSelectionListAccessor",
+		"ServerSelectionListMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

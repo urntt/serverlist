@@ -1,0 +1,27 @@
+{
+	"key.category.serverlist.general": "服务器列表",
+	"key.serverlist.edit": "编辑服务器",
+	"key.serverlist.delete": "删除服务器",
+	"key.serverlist.open": "打开服务器列表",
+
+	"serverlist.search": "搜索服务器",
+	"serverlist.search.hint": "按名称或地址搜索",
+
+	"options.serverlist.title": "服务器列表设置",
+	"options.serverlist.section.serverList": "服务器列表",
+	"options.serverlist.section.pings": "服务器 Ping",
+	"options.serverlist.dragToReorder": "拖动排序",
+	"options.serverlist.dragToReorder.tooltip": "在服务器列表中拖动已保存的服务器来调整顺序。",
+	"options.serverlist.searchBox": "搜索框",
+	"options.serverlist.searchBox.tooltip": "在服务器列表的按钮上方显示搜索框。下次打开服务器列表时生效。",
+	"options.serverlist.showPingMs": "显示延迟",
+	"options.serverlist.showPingMs.tooltip": "在在线人数旁边显示每个服务器的延迟毫秒数。",
+	"options.serverlist.pauseMenuButton": "暂停菜单按钮",
+	"options.serverlist.pauseMenuButton.tooltip": "在暂停菜单中显示一个打开服务器列表的按钮。",
+	"options.serverlist.fasterServerPings": "更快的 Ping",
+	"options.serverlist.fasterServerPings.tooltip": "同时 Ping 更多服务器，慢速或无法连接的服务器不再拖住其他服务器。原版最多同时 Ping 五个。",
+	"options.serverlist.skipReverseDnsForIpAddresses": "IP 地址跳过反向 DNS",
+	"options.serverlist.skipReverseDnsForIpAddresses.tooltip": "地址是 IP 时不再查询主机名。Ping 和加入这类服务器可能因此快几秒。",
+
+	"modmenu.descriptionTranslation.serverlist": "让多人游戏服务器列表更好用：拖动排序、编辑和删除快捷键、搜索、更快的 Ping、从暂停菜单快速打开，以及服务器信息页面上供其他模组共用的区域。"
+}

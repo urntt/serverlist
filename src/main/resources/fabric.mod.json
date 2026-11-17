@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "serverlist",
+	"version": "${version}",
+	"name": "serverlist",
+	"description": "Makes the multiplayer server list more usable: drag-and-drop reordering, edit and delete shortcuts, search, faster pings, quick access from the pause menu, and a shared area on the server info screen for other mods.",
+	"authors": [
+		"urntt"
+	],
+	"contact": {
+		"homepage": "https://github.com/urntt/serverlist",
+		"sources": "https://github.com/urntt/serverlist",
+		"issues": "https://github.com/urntt/serverlist/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/serverlist/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.urntt.serverlist.ServerListClient"
+		],
+		"modmenu": [
+			"com.urntt.serverlist.compat.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "serverlist.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "~${minecraft_version}",
+		"java": ">=${java_version}",
+		"fabric-api": ">=${fabric_api_version}"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}
