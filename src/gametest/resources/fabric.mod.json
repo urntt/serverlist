@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "serverlist-gametest",
+	"version": "0.0.0",
+	"name": "serverlist game tests",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"com.urntt.serverlist.gametest.ConfigGameTest",
+			"com.urntt.serverlist.gametest.ServerListScreenGameTest",
+			"com.urntt.serverlist.gametest.ServerSearchGameTest",
+			"com.urntt.serverlist.gametest.ServerInfoScreenGameTest",
+			"com.urntt.serverlist.gametest.MultiplayerGameTest"
+		],
+		"serverlist": [
+			"com.urntt.serverlist.gametest.TestServerInfoExtension"
+		]
+	},
+	"mixins": [
+		{
+			"config": "serverlist-gametest.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"serverlist": "*"
+	}
+}

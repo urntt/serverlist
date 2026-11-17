@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "com.urntt.serverlist.gametest.mixin",
+	"compatibilityLevel": "JAVA_${java_version}",
+	"client": [
+		"FakeEssentialServerListMixin",
+		"ForeignServerInfoWidgetMixin",
+		"KeyBindsListKeyEntryAccessor",
+		"KeyBindsScreenAccessor",
+		"ServerNameResolverInvoker",
+		"SlowServerPingMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
