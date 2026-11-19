@@ -219,10 +219,19 @@ final class TestSupport {
 	 * @return the previous window state, for {@link #restoreWindow}
 	 */
 	static int[] useRoomyWindow(final ClientGameTestContext context) {
+		return useWindow(context, ROOMY_WINDOW_WIDTH, ROOMY_WINDOW_HEIGHT, ROOMY_GUI_SCALE);
+	}
+
+	/**
+	 * Resizes the window and sets the GUI scale.
+	 *
+	 * @return the previous window state, for {@link #restoreWindow}
+	 */
+	static int[] useWindow(final ClientGameTestContext context, final int width, final int height, final int guiScale) {
 		int[] previous = context.computeOnClient(client -> new int[] {
 			client.getWindow().getScreenWidth(), client.getWindow().getScreenHeight(), client.options.guiScale().get()});
-		context.getInput().resizeWindow(ROOMY_WINDOW_WIDTH, ROOMY_WINDOW_HEIGHT);
-		setGuiScale(context, ROOMY_GUI_SCALE);
+		context.getInput().resizeWindow(width, height);
+		setGuiScale(context, guiScale);
 		return previous;
 	}
 

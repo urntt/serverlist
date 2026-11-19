@@ -39,11 +39,13 @@ import org.slf4j.LoggerFactory;
  *   <li>runs the {@link ServerInfoScreenExtension} entrypoints, ordered by mod id, for new widgets;</li>
  *   <li>adopts widgets that other mods placed in the option area themselves: widgets that overlap the central
  *       column below the address field; widgets elsewhere are left alone;</li>
- *   <li>lays out the resource pack button, the extension rows, the adopted widgets, Done, and Cancel with
- *       {@link ServerInfoLayout}, and puts them in that order for keyboard navigation.</li>
+ *   <li>lays out the resource pack button, the extension rows, and the adopted widgets in the option area, and
+ *       Done and Cancel side by side at the bottom of the screen, with {@link ServerInfoLayout}, and puts them in
+ *       that order for keyboard navigation.</li>
  * </ol>
  *
- * <p>Without extension rows or adopted widgets, the screen is left exactly as vanilla made it.
+ * <p>Done and Cancel always move to the bottom, also without extension rows or adopted widgets, so the screen
+ * looks the same whichever mods are installed.
  */
 public final class ServerInfoScreenController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerListClient.MOD_ID);
@@ -81,13 +83,15 @@ public final class ServerInfoScreenController {
 
 		ServerInfoScreenState state = ext.serverlist$state();
 		List<AbstractWidget> widgets = Screens.getWidgets(screen);
-		restoreScrolledWidgets(widgets, state);
-
+		// A new generation of widgets forgets the previous one, including widgets that were moved into a scrolling
+		// area; only widgets of the current generation are put back before laying out again.
 		if (state.startGeneration(vanilla.serverlist$nameEdit())) {
 			runExtensions(screen, vanilla, state);
 			for (ServerInfoRow row : state.apiRows) {
 				widgets.addAll(row.widgets());
 			}
+		} else {
+			restoreScrolledWidgets(widgets, state);
 		}
 
 		adoptForeignWidgets(screen, widgets, state, address, resourcePacks, done, cancel);
@@ -98,15 +102,10 @@ public final class ServerInfoScreenController {
 		for (AbstractWidget widget : state.adopted) {
 			rows.add(ServerInfoRow.ownSize(widget));
 		}
-		if (rows.size() == 1) {
-			return;
-		}
-
 		List<Integer> rowHeights = rows.stream().map(ServerInfoRow::height).toList();
 		ServerInfoLayout.Placement placement = ServerInfoLayout.compute(screen.height, address.getBottom(), rowHeights);
 		int centerX = screen.width / 2;
-		done.setY(placement.doneY());
-		cancel.setY(placement.cancelY());
+		placeFooter(done, cancel, centerX, placement.footerY());
 
 		List<AbstractWidget> navigationOrder = new ArrayList<>();
 		if (placement.scrolling()) {
@@ -184,6 +183,15 @@ public final class ServerInfoScreenController {
 			AbstractWidget widget = rowWidgets.getFirst();
 			widget.setPosition(centerX - widget.getWidth() / 2, y);
 		}
+	}
+
+	/** Puts Done and Cancel side by side, Done on the left, centered at the bottom of the screen. */
+	private static void placeFooter(final AbstractWidget done, final AbstractWidget cancel, final int centerX, final int y) {
+		int halfSpacing = ServerInfoLayout.FOOTER_BUTTON_SPACING / 2;
+		done.setWidth(ServerInfoLayout.FOOTER_BUTTON_WIDTH);
+		cancel.setWidth(ServerInfoLayout.FOOTER_BUTTON_WIDTH);
+		done.setPosition(centerX - halfSpacing - ServerInfoLayout.FOOTER_BUTTON_WIDTH, y);
+		cancel.setPosition(centerX + halfSpacing, y);
 	}
 
 	/**

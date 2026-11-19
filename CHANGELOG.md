@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Faster server list pings: up to 32 servers are pinged at once instead of 5.
 - Servers entered as IP addresses skip the reverse DNS lookup when pinged or joined.
 - Each server shows its latency in milliseconds.
-- An API for other mods to add widgets to the Add Server and Edit Server Info screens, and automatic placement of widgets that mods add there by hand, so they no longer overlap.
+- An API for other mods to add widgets to the Add Server and Edit Server Info screens, and automatic placement of widgets that mods add there by hand, so they no longer overlap. Done and Cancel sit side by side at the bottom of these screens to leave room for the widgets.
 - A settings screen (through Mod Menu) and `config/serverlist.json` to turn each feature off.
 
 ### Fixed

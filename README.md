@@ -12,7 +12,7 @@ A client-side Fabric mod for Minecraft: Java Edition that makes the multiplayer 
   - Vanilla pings at most five servers at a time, so a few slow or unreachable servers can keep the rest at "Pinging...". The mod pings up to 32 at a time; idle pinger threads stop after 30 seconds.
   - Servers entered as IP addresses no longer trigger a reverse DNS lookup when pinged or joined, which can take several seconds on some networks.
   - Each server shows its latency in milliseconds next to its player count, colored like the signal bars.
-- **Room for other mods on the Add/Edit Server screen.** Mods can add their own buttons to the Add Server and Edit Server Info screens through the mod's API, and the mod also arranges buttons that other mods place there by hand, so they no longer overlap. Without such buttons, the screen looks exactly like vanilla.
+- **Room for other mods on the Add/Edit Server screen.** Done and Cancel sit side by side at the bottom of the Add Server and Edit Server Info screens, which leaves room for more options above them. Mods can add their own buttons there through the mod's API, and the mod also arranges buttons that other mods place there by hand, so they no longer overlap.
 
 ## Installation
 
@@ -56,7 +56,7 @@ Every feature that changes vanilla behavior can be turned off, from the Mod Menu
 
 ## For mod developers
 
-Mods can add widgets to the Add Server and Edit Server Info screens without positioning them. serverlist places them below vanilla's "Server Resource Packs" button, moves Done and Cancel down, and makes the area scroll when the screen is too small.
+Mods can add widgets to the Add Server and Edit Server Info screens without positioning them. serverlist places them below vanilla's "Server Resource Packs" button and above Done and Cancel, which sit side by side at the bottom of the screen, and makes the area scroll when the screen is too small.
 
 Implement `com.urntt.serverlist.api.ServerInfoScreenExtension`:
 

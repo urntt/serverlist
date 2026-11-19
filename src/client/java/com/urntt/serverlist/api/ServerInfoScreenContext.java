@@ -8,8 +8,9 @@ import net.minecraft.client.multiplayer.ServerData;
  * What an {@link ServerInfoScreenExtension} can do on the Add Server or Edit Server Info screen.
  *
  * <p>Rows are placed below the vanilla "Server Resource Packs" button, in the order they are added, and above
- * the Done and Cancel buttons. serverlist sets their position and width; widgets should be 20 pixels high like
- * vanilla buttons. When the rows do not fit on the screen, the area scrolls.
+ * the Done and Cancel buttons, which sit side by side at the bottom of the screen. serverlist sets their position
+ * and width; widgets should be 20 pixels high like vanilla buttons. When the rows do not fit on the screen, the
+ * area scrolls.
  */
 public interface ServerInfoScreenContext {
 	/** Width of a widget that fills a row on its own. */
