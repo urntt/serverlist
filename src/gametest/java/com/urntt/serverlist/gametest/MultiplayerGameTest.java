@@ -9,6 +9,8 @@ import static com.urntt.serverlist.gametest.TestSupport.click;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.urntt.serverlist.ServerListClient;
 import com.urntt.serverlist.ServerListKeyMappings;
+import com.urntt.serverlist.config.ConfigMode;
+import com.urntt.serverlist.config.ServerListConfigScreen;
 import com.urntt.serverlist.gametest.mixin.ServerNameResolverInvoker;
 import com.urntt.serverlist.mixin.ServerSelectionListAccessor;
 import com.urntt.serverlist.pause.PauseMenuButton;
@@ -185,6 +187,12 @@ public final class MultiplayerGameTest implements FabricClientGameTest {
 		context.waitTick();
 		assertTrue(pauseMenuButton(context) == null, "the server list button is shown although disabled");
 		ServerListClient.config().setPauseMenuButton(true);
+
+		ServerListClient.config().setMode(ConfigMode.DISABLED);
+		context.setScreen(() -> new PauseScreen(true));
+		context.waitTick();
+		assertTrue(pauseMenuButton(context) == null, "the server list button is shown in disabled mode");
+		ServerListClient.config().setMode(ConfigMode.CUSTOM);
 		context.setScreen(() -> null);
 	}
 
@@ -205,7 +213,27 @@ public final class MultiplayerGameTest implements FabricClientGameTest {
 		context.waitForScreen(JoinMultiplayerScreen.class);
 		context.getInput().pressKey(InputConstants.getKey("key.keyboard.escape"));
 		context.waitFor(client -> client.gui.screen() == null);
+
+		ServerListClient.config().setMode(ConfigMode.DISABLED);
+		context.getInput().pressKey(open);
+		context.waitTicks(5);
+		assertTrue(TestSupport.currentScreen(context) == null, "the open key opens the server list in disabled mode");
+		ServerListClient.config().setMode(ConfigMode.CUSTOM);
 		open.setKey(open.getDefaultKey());
+		KeyMapping.resetMapping();
+
+		KeyMapping openConfig = ServerListKeyMappings.openConfig();
+		assertEquals(InputConstants.UNKNOWN, openConfig.getDefaultKey(), "default key of Open Server List Settings");
+		openConfig.setKey(InputConstants.getKey("key.keyboard.k"));
+		KeyMapping.resetMapping();
+		context.getInput().pressKey(openConfig);
+		context.waitForScreen(ServerListConfigScreen.class);
+		TestSupport.moveCursor(context, 0, 0);
+		context.waitTick();
+		context.takeScreenshot("config_in_game");
+		context.getInput().pressKey(InputConstants.getKey("key.keyboard.escape"));
+		context.waitFor(client -> client.gui.screen() == null);
+		openConfig.setKey(openConfig.getDefaultKey());
 		KeyMapping.resetMapping();
 	}
 

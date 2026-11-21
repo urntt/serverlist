@@ -1,0 +1,21 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" fill="none"/>
+  <g transform="translate(0 50)">
+    <!-- hair clip: unchanged -->
+    <g transform="translate(600 120) rotate(20 130 58) scale(1.5)"> <path d="M28 57 C28 49, 28 42, 29 36 C31 27, 39 23, 48 27 C67 35, 89 43, 105 50 C115 54, 115 58, 105 62 C89 69, 67 78, 48 86 C39 90, 31 86, 29 77 C28 70, 28 64, 28 57 Z" fill="#ff4fa0"/> <path d="M104 16 L104 69 C104 108, 156 108, 156 69 L156 16" fill="none" stroke="#ff4fa0" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/> <path d="M232 57 C232 49, 232 42, 231 36 C229 27, 221 23, 212 27 C193 35, 171 43, 155 50 C145 54, 145 58, 155 62 C171 69, 193 78, 212 86 C221 90, 229 86, 231 77 C232 70, 232 64, 232 57 Z" fill="#ff4fa0"/> </g>
+
+        <!-- server list: two stacked servers -->
+    <g fill="none" stroke="#ff4fa0" stroke-width="50" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="266" y="360" width="490" height="156" rx="62"/>
+      <rect x="266" y="606" width="490" height="156" rx="62"/>
+    </g>
+
+    <!-- server names and signal bars -->
+    <g stroke="#ff4fa0" stroke-width="38" stroke-linecap="round">
+      <path d="M352 438 H468"/>
+      <path d="M580 458 V458 M630 458 V438 M680 458 V418"/>
+      <path d="M352 684 H468"/>
+      <path d="M580 704 V704 M630 704 V684 M680 704 V664"/>
+    </g>
+  </g>
+</svg>

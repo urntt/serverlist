@@ -26,7 +26,7 @@ abstract class ServerNameResolverMixin {
 	private Optional<ResolvedServerAddress> serverlist$skipReverseDns(
 			final ServerAddressResolver resolver, final ServerAddress address, final Operation<Optional<ResolvedServerAddress>> original) {
 		Optional<ResolvedServerAddress> resolved = original.call(resolver, address);
-		if (!ServerListClient.config().skipReverseDnsForIpAddresses()) {
+		if (!ServerListClient.settings().skipReverseDnsForIpAddresses()) {
 			return resolved;
 		}
 		return resolved.map(result -> LiteralAddresses.withLiteralHostName(address.getHost(), result));

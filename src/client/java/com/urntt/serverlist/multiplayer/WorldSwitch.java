@@ -1,5 +1,6 @@
 package com.urntt.serverlist.multiplayer;
 
+import com.urntt.serverlist.ServerListClient;
 import com.urntt.serverlist.ServerListKeyMappings;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
@@ -22,7 +23,7 @@ public final class WorldSwitch {
 	public static void registerOpenKey() {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (ServerListKeyMappings.open().consumeClick()) {
-				if (client.gui.screen() == null && client.level != null) {
+				if (ServerListClient.settings().shortcuts() && client.gui.screen() == null && client.level != null) {
 					client.gui.setScreen(new JoinMultiplayerScreen(null));
 				}
 			}

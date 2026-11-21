@@ -102,7 +102,7 @@ public final class ServerDragHandler {
 	}
 
 	private boolean enabled() {
-		return ServerListClient.config().dragToReorder()
+		return ServerListClient.settings().dragToReorder()
 				&& !ServerFilter.isActive(this.list())
 				&& !EssentialCompat.handlesDrag(this.screen);
 	}

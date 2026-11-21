@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.urntt.serverlist.ServerListClient;
+import com.urntt.serverlist.compat.OneConfigBridge;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,11 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The mod's settings, persisted as JSON. Every change is written to disk immediately.
+ * The mod's own settings and the configuration mode, persisted as JSON. Every change is written to disk immediately.
  *
  * <p>Each setting switches one feature that changes vanilla behavior. All of them are enabled by default.
  */
-public final class ServerListConfig {
+public final class ServerListConfig implements ServerListSettings {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerListClient.MOD_ID);
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -48,14 +49,45 @@ public final class ServerListConfig {
 
 		try {
 			Settings settings = GSON.fromJson(Files.readString(path), Settings.class);
-			return new ServerListConfig(path, settings != null ? settings : new Settings());
+			return new ServerListConfig(path, settings != null ? settings.normalized() : new Settings());
 		} catch (IOException | JsonParseException e) {
 			LOGGER.warn("Failed to read config file {}, using defaults", path, e);
 			return new ServerListConfig(path, new Settings());
 		}
 	}
 
-	/** Whether saved servers can be reordered by dragging them in the server list. */
+	/** The mode stored in the file, which may name OneConfig even while OneConfig is not installed. */
+	public ConfigMode storedMode() {
+		return this.settings.mode;
+	}
+
+	/** The mode that applies: OneConfig mode falls back to custom settings while OneConfig is not available. */
+	public ConfigMode effectiveMode() {
+		ConfigMode mode = this.settings.mode;
+		return mode == ConfigMode.ONECONFIG && !OneConfigBridge.isAvailable() ? ConfigMode.CUSTOM : mode;
+	}
+
+	/** The settings that apply in the {@linkplain #effectiveMode() effective mode}. */
+	public ServerListSettings effective() {
+		return switch (this.effectiveMode()) {
+			case DISABLED -> SettingValues.DISABLED;
+			case CUSTOM -> this;
+			case ONECONFIG -> OneConfigBridge.settings().orElse(this);
+		};
+	}
+
+	public void setMode(final ConfigMode mode) {
+		this.settings.mode = mode;
+		this.save();
+	}
+
+	/** The custom settings never turn the key bindings off; unbinding them does. */
+	@Override
+	public boolean shortcuts() {
+		return SettingValues.DEFAULTS.shortcuts();
+	}
+
+	@Override
 	public boolean dragToReorder() {
 		return this.settings.dragToReorder;
 	}
@@ -65,7 +97,7 @@ public final class ServerListConfig {
 		this.save();
 	}
 
-	/** Whether the pause menu shows a button that opens the server list. */
+	@Override
 	public boolean pauseMenuButton() {
 		return this.settings.pauseMenuButton;
 	}
@@ -75,7 +107,7 @@ public final class ServerListConfig {
 		this.save();
 	}
 
-	/** Whether the server list shows a search box above its buttons. */
+	@Override
 	public boolean searchBox() {
 		return this.settings.searchBox;
 	}
@@ -85,7 +117,7 @@ public final class ServerListConfig {
 		this.save();
 	}
 
-	/** Whether each server entry shows its latency in milliseconds. */
+	@Override
 	public boolean showPingMs() {
 		return this.settings.showPingMs;
 	}
@@ -95,7 +127,7 @@ public final class ServerListConfig {
 		this.save();
 	}
 
-	/** Whether the server list pings more servers at once than vanilla does. */
+	@Override
 	public boolean fasterServerPings() {
 		return this.settings.fasterServerPings;
 	}
@@ -105,7 +137,7 @@ public final class ServerListConfig {
 		this.save();
 	}
 
-	/** Whether literal IP addresses skip the reverse DNS lookup when pinging or joining a server. */
+	@Override
 	public boolean skipReverseDnsForIpAddresses() {
 		return this.settings.skipReverseDnsForIpAddresses;
 	}
@@ -128,11 +160,20 @@ public final class ServerListConfig {
 	 * The serialized form. Field initializers are the defaults, which also apply to keys missing from the file.
 	 */
 	private static final class Settings {
-		private boolean dragToReorder = true;
-		private boolean pauseMenuButton = true;
-		private boolean searchBox = true;
-		private boolean showPingMs = true;
-		private boolean fasterServerPings = true;
-		private boolean skipReverseDnsForIpAddresses = true;
+		private ConfigMode mode = ConfigMode.CUSTOM;
+		private boolean dragToReorder = SettingValues.DEFAULTS.dragToReorder();
+		private boolean pauseMenuButton = SettingValues.DEFAULTS.pauseMenuButton();
+		private boolean searchBox = SettingValues.DEFAULTS.searchBox();
+		private boolean showPingMs = SettingValues.DEFAULTS.showPingMs();
+		private boolean fasterServerPings = SettingValues.DEFAULTS.fasterServerPings();
+		private boolean skipReverseDnsForIpAddresses = SettingValues.DEFAULTS.skipReverseDnsForIpAddresses();
+
+		/** Replaces a mode that a hand-edited file left empty or misspelled. */
+		private Settings normalized() {
+			if (this.mode == null) {
+				this.mode = ConfigMode.CUSTOM;
+			}
+			return this;
+		}
 	}
 }

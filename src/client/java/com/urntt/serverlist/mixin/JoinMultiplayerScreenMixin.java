@@ -57,7 +57,7 @@ abstract class JoinMultiplayerScreenMixin extends Screen implements ServerListSc
 					value = "INVOKE",
 					target = "Lnet/minecraft/client/gui/layouts/HeaderAndFooterLayout;addToFooter(Lnet/minecraft/client/gui/layouts/LayoutElement;)Lnet/minecraft/client/gui/layouts/LayoutElement;"))
 	private LayoutElement serverlist$addSearchBox(final LayoutElement footer) {
-		if (ServerListClient.config().searchBox() && footer instanceof LinearLayout column) {
+		if (ServerListClient.settings().searchBox() && footer instanceof LinearLayout column) {
 			ServerSelectionListExt list = (ServerSelectionListExt) this.serverSelectionList;
 			EditBox searchBox = ServerSearchBox.create(this.font, list::serverlist$setQuery);
 			column.addChild(searchBox);

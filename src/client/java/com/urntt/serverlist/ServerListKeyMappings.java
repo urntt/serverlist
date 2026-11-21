@@ -13,10 +13,12 @@ public final class ServerListKeyMappings {
 	public static final String EDIT_NAME = "key.serverlist.edit";
 	public static final String DELETE_NAME = "key.serverlist.delete";
 	public static final String OPEN_NAME = "key.serverlist.open";
+	public static final String OPEN_CONFIG_NAME = "key.serverlist.openConfig";
 
 	private static KeyMapping edit;
 	private static KeyMapping delete;
 	private static KeyMapping open;
+	private static KeyMapping openConfig;
 	private static Set<KeyMapping> screenOnly = Set.of();
 
 	private ServerListKeyMappings() {
@@ -28,6 +30,7 @@ public final class ServerListKeyMappings {
 		edit = KeyMappingHelper.registerKeyMapping(create(EDIT_NAME, "key.mouse.right", category));
 		delete = KeyMappingHelper.registerKeyMapping(create(DELETE_NAME, "key.keyboard.delete", category));
 		open = KeyMappingHelper.registerKeyMapping(new KeyMapping(OPEN_NAME, InputConstants.UNKNOWN.getValue(), category));
+		openConfig = KeyMappingHelper.registerKeyMapping(new KeyMapping(OPEN_CONFIG_NAME, InputConstants.UNKNOWN.getValue(), category));
 		screenOnly = Set.of(edit, delete);
 	}
 
@@ -49,6 +52,11 @@ public final class ServerListKeyMappings {
 	/** Opens the server list while playing. */
 	public static KeyMapping open() {
 		return open;
+	}
+
+	/** Opens the configuration screen while playing. */
+	public static KeyMapping openConfig() {
+		return openConfig;
 	}
 
 	/**

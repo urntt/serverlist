@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 abstract class PauseScreenMixin {
 	@WrapOperation(method = "createPauseMenu", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/layouts/GridLayout;arrangeElements()V"))
 	private void serverlist$addServerListButton(final GridLayout pauseMenu, final Operation<Void> original) {
-		if (ServerListClient.config().pauseMenuButton()) {
+		if (ServerListClient.settings().pauseMenuButton()) {
 			PauseMenuButton.addTo(pauseMenu, (PauseScreen) (Object) this);
 		}
 		original.call(pauseMenu);

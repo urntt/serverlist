@@ -20,7 +20,10 @@ A client-side Fabric mod for Minecraft: Java Edition that makes the multiplayer 
 2. Download the jar from this repository's [Releases](https://github.com/urntt/serverlist/releases) page. Each release supports a single Minecraft version, shown after the `+` in its version number. For example, `1.0.0+26.3` is for Minecraft 26.3.
 3. Put the jar into your `.minecraft/mods` folder.
 
-[Mod Menu](https://modrinth.com/mod/modmenu) is optional. When installed, it adds a settings screen for the mod.
+Optional:
+
+- [Mod Menu](https://modrinth.com/mod/modmenu) opens the settings screen from the mod list.
+- [OneConfig](https://modrinth.com/mod/oneconfig) can manage the settings instead (see [Settings](#settings)).
 
 ## Usage
 
@@ -33,12 +36,23 @@ The bindings are listed in **Options → Controls → Key Binds** under **Server
 | Edit Server | Right mouse button | Opens Edit Server Info for the server under the cursor (mouse) or the selected server (keyboard). |
 | Delete Server | <kbd>Delete</kbd> | Asks to delete the selected server (keyboard) or the server under the cursor (mouse). |
 | Open Server List | Unbound | Opens the server list while playing. |
+| Open Server List Settings | Unbound | Opens the settings screen while playing. |
 
 Edit Server and Delete Server only work inside the server list, so they never conflict with in-game bindings on the same key, such as the right mouse button for using items.
 
 ### Settings
 
-Every feature that changes vanilla behavior can be turned off, from the Mod Menu settings screen or in `config/serverlist.json`. All of them are on by default.
+Open the settings screen from Mod Menu, or bind **Open Server List Settings** in the Controls screen. The button at the top of the screen selects the mode:
+
+| Mode | Effect |
+| --- | --- |
+| Disabled | Every feature is off: the server list, the pause menu and server pings work like vanilla, and the Edit Server, Delete Server and Open Server List bindings do nothing. Widgets that other mods add to the Add Server and Edit Server Info screens are still arranged, because those mods rely on it. |
+| Custom (default) | The settings on this screen apply. |
+| OneConfig | The settings registered with OneConfig apply, and are changed in OneConfig. This screen shows them greyed out and links to the mod's OneConfig page. Turning the mod off on its OneConfig card works like Disabled. Only offered when OneConfig is installed. |
+
+If OneConfig mode is selected but OneConfig is later removed, the custom settings apply until you pick another mode.
+
+In custom mode, every feature that changes vanilla behavior can be turned off. All of them are on by default. Settings are saved to `config/serverlist.json` as soon as you change them.
 
 | Setting | Key in `serverlist.json` |
 | --- | --- |
@@ -106,7 +120,7 @@ Build the mod:
 
 The jar is written to `build/libs/`.
 
-Run the client game tests, which start Minecraft and a local dedicated server and check every feature: dragging (also after returning from other screens), the key bindings and their rebinding, the search and its reorder lock, the pause menu button, switching servers from in game, the ping changes, the Add/Edit Server area and its API, and the settings:
+Run the client game tests, which start Minecraft and a local dedicated server and check every feature: dragging (also after returning from other screens), the key bindings and their rebinding, the search and its reorder lock, the pause menu button, switching servers from in game, the ping changes, the Add/Edit Server area and its API, and the settings and their modes:
 
 ```bash
 ./gradlew runClientGameTest
@@ -119,6 +133,14 @@ xvfb-run -a -s "-screen 0 1920x1080x24" ./gradlew runClientGameTest
 ```
 
 Screenshots taken by the tests are saved to `build/run/clientGameTest/screenshots/`.
+
+By default, the development client and the tests run without OneConfig. Add `-PoneConfigRuntime=true` to run them with OneConfig installed, which offers the OneConfig mode:
+
+```bash
+./gradlew runClientGameTest -PoneConfigRuntime=true
+```
+
+The mod icon is rendered from `art/icon.svg`.
 
 ## License
 

@@ -116,14 +116,14 @@ abstract class OnlineServerEntryMixin {
 			method = "extractContent",
 			at = @At(value = "INVOKE", target = "Ljava/util/concurrent/ThreadPoolExecutor;submit(Ljava/lang/Runnable;)Ljava/util/concurrent/Future;"))
 	private Future<?> serverlist$configurePingerThreads(final ThreadPoolExecutor pool, final Runnable task, final Operation<Future<?>> original) {
-		PingerThreads.configure(pool, ServerListClient.config().fasterServerPings());
+		PingerThreads.configure(pool, ServerListClient.settings().fasterServerPings());
 		return original.call(pool, task);
 	}
 
 	@Inject(method = "extractContent", at = @At("TAIL"))
 	private void serverlist$drawLatency(
 			final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final boolean hovered, final float a, final CallbackInfo ci) {
-		if (ServerListClient.config().showPingMs()) {
+		if (ServerListClient.settings().showPingMs()) {
 			PingDisplay.draw(graphics, this.minecraft.font, (ServerSelectionList.OnlineServerEntry) (Object) this, this.serverData);
 		}
 	}

@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- A mode button at the top of the settings screen: Disabled turns every feature off, Custom (the default) applies the settings on the screen, and OneConfig applies the settings from OneConfig.
+- Optional OneConfig integration that manages the settings in OneConfig mode.
+- An unbound key binding that opens the settings screen while playing.
+
 ### Changed
 
 - New mod icon.

@@ -1,5 +1,6 @@
 package com.urntt.serverlist.multiplayer;
 
+import com.urntt.serverlist.ServerListClient;
 import com.urntt.serverlist.ServerListKeyMappings;
 import com.urntt.serverlist.mixin.JoinMultiplayerScreenAccessor;
 import java.util.function.Function;
@@ -48,6 +49,9 @@ public final class ServerListActions {
 	 * @return whether the press was consumed
 	 */
 	public static boolean mousePressed(final JoinMultiplayerScreen screen, final MouseButtonEvent event) {
+		if (!ServerListClient.settings().shortcuts()) {
+			return false;
+		}
 		ServerSelectionList list = list(screen);
 		for (Action action : Action.values()) {
 			if (action.mapping.get().matchesMouse(event)) {
@@ -73,7 +77,7 @@ public final class ServerListActions {
 			return true;
 		}
 
-		if (screen.getFocused() instanceof EditBox) {
+		if (!ServerListClient.settings().shortcuts() || screen.getFocused() instanceof EditBox) {
 			return false;
 		}
 

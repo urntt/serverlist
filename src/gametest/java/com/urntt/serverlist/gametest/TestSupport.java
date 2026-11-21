@@ -3,6 +3,7 @@ package com.urntt.serverlist.gametest;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.urntt.serverlist.ServerListClient;
+import com.urntt.serverlist.config.ConfigMode;
 import com.urntt.serverlist.config.ServerListConfig;
 import com.urntt.serverlist.mixin.JoinMultiplayerScreenAccessor;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ final class TestSupport {
 
 	static void resetConfig() {
 		ServerListConfig config = ServerListClient.config();
+		config.setMode(ConfigMode.CUSTOM);
 		config.setDragToReorder(true);
 		config.setPauseMenuButton(true);
 		config.setSearchBox(true);

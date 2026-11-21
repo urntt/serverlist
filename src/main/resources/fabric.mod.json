@@ -21,6 +21,9 @@
 		],
 		"modmenu": [
 			"com.urntt.serverlist.compat.ModMenuIntegration"
+		],
+		"oneconfig:config": [
+			"com.urntt.serverlist.compat.oneconfig.OneConfigIntegration"
 		]
 	},
 	"mixins": [
@@ -36,6 +39,7 @@
 		"fabric-api": ">=${fabric_api_version}"
 	},
 	"suggests": {
-		"modmenu": "*"
+		"modmenu": "*",
+		"oneconfig": "*"
 	}
 }
