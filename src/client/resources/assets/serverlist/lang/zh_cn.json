@@ -16,7 +16,7 @@
 	"options.serverlist.mode.custom.tooltip": "使用下方的设置。",
 	"options.serverlist.mode.oneconfig": "OneConfig",
 	"options.serverlist.mode.oneconfig.tooltip": "设置由 OneConfig 管理。下方显示 OneConfig 当前生效的值，不能在这里修改。",
-	"options.serverlist.mode.oneconfig.missing": "已选择 OneConfig 模式，但没有安装 OneConfig，因此使用下方的设置。",
+	"options.serverlist.mode.oneconfig.missing": "没有安装 OneConfig，因此使用下方的设置。安装 OneConfig 后将使用 OneConfig 模式。",
 	"options.serverlist.openOneConfig": "在 OneConfig 中打开",
 	"options.serverlist.section.serverList": "服务器列表",
 	"options.serverlist.section.pings": "服务器 Ping",

@@ -16,7 +16,7 @@
 	"options.serverlist.mode.custom.tooltip": "The settings below apply.",
 	"options.serverlist.mode.oneconfig": "OneConfig",
 	"options.serverlist.mode.oneconfig.tooltip": "The settings are managed in OneConfig. The settings below show what OneConfig applies and cannot be changed here.",
-	"options.serverlist.mode.oneconfig.missing": "OneConfig mode is selected, but OneConfig is not installed, so the settings below apply.",
+	"options.serverlist.mode.oneconfig.missing": "OneConfig is not installed, so the settings below apply. Once OneConfig is installed, OneConfig mode applies.",
 	"options.serverlist.openOneConfig": "Open in OneConfig",
 	"options.serverlist.section.serverList": "Server List",
 	"options.serverlist.section.pings": "Server Pings",

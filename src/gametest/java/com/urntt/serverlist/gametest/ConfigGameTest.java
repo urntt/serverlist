@@ -55,6 +55,10 @@ public final class ConfigGameTest implements FabricClientGameTest {
 		assertDefaults(ServerListConfig.load(ServerListConfig.defaultPath()), "defaults read back from the file");
 		boolean oneConfigInstalled = FabricLoader.getInstance().isModLoaded(OneConfigBridge.MOD_ID);
 		assertEquals(oneConfigInstalled, OneConfigBridge.isAvailable(), "OneConfig mode is available exactly when OneConfig is installed");
+		// OneConfig mode is the default, and the custom settings apply while OneConfig is not installed.
+		assertEquals(oneConfigInstalled ? ConfigMode.ONECONFIG : ConfigMode.CUSTOM, config.effectiveMode(), "default effective mode");
+
+		testModeCycle(context, config, oneConfigInstalled);
 
 		config.setShowPingMs(false);
 		config.setSkipReverseDnsForIpAddresses(false);
@@ -63,7 +67,6 @@ public final class ConfigGameTest implements FabricClientGameTest {
 		assertTrue(reloaded.dragToReorder() && reloaded.fasterServerPings(), "unchanged settings were not kept");
 		TestSupport.resetConfig();
 
-		testModeCycle(context, config, oneConfigInstalled);
 		testDisabledServerList(context, config);
 
 		screenshotScreens(context, "en_us");
@@ -74,23 +77,25 @@ public final class ConfigGameTest implements FabricClientGameTest {
 	}
 
 	private static void assertDefaults(final ServerListConfig config, final String what) {
-		assertEquals(ConfigMode.CUSTOM, config.storedMode(), "mode of the " + what);
+		assertEquals(ConfigMode.ONECONFIG, config.storedMode(), "mode of the " + what);
 		assertEquals(SettingValues.DEFAULTS, SettingValues.copyOf(config), what);
 	}
 
 	/**
-	 * Clicks the mode button through every offered mode and back to custom. OneConfig mode is only offered while
-	 * OneConfig is installed.
+	 * Clicks the mode button from the default mode through every offered mode and back. OneConfig mode is only
+	 * offered while OneConfig is installed; otherwise the default OneConfig mode shows as custom.
 	 */
 	private static void testModeCycle(final ClientGameTestContext context, final ServerListConfig config, final boolean oneConfigInstalled) {
 		List<ConfigMode> modes = oneConfigInstalled
-				? List.of(ConfigMode.CUSTOM, ConfigMode.ONECONFIG, ConfigMode.DISABLED)
+				? List.of(ConfigMode.ONECONFIG, ConfigMode.DISABLED, ConfigMode.CUSTOM)
 				: List.of(ConfigMode.CUSTOM, ConfigMode.DISABLED);
 		// A custom value that differs from OneConfig's default shows which settings apply in OneConfig mode.
 		config.setShowPingMs(false);
 
 		openConfigScreen(context);
-		assertTrue(settingsActive(context), "the settings are not editable in custom mode");
+		assertEquals(!oneConfigInstalled, settingsActive(context), "settings editable in the default mode");
+		hoverWidget(context, widget -> widget instanceof CycleButton<?> cycle && cycle.getValue() instanceof ConfigMode);
+		context.takeScreenshot("config_default_mode");
 		for (int i = 1; i <= modes.size(); i++) {
 			ConfigMode expected = modes.get(i % modes.size());
 			clickWidget(context, widget -> widget instanceof CycleButton<?> cycle && cycle.getValue() instanceof ConfigMode);
@@ -190,14 +195,25 @@ public final class ConfigGameTest implements FabricClientGameTest {
 
 	/** Clicks the first widget of the open screen that matches, with the real mouse. */
 	private static void clickWidget(final ClientGameTestContext context, final Predicate<AbstractWidget> matches) {
-		double[] center = context.computeOnClient(client -> {
+		TestSupport.click(context, widgetCenter(context, matches), InputConstants.MOUSE_BUTTON_LEFT);
+	}
+
+	/** Moves the cursor over the first widget of the open screen that matches, so its tooltip shows. */
+	private static void hoverWidget(final ClientGameTestContext context, final Predicate<AbstractWidget> matches) {
+		double[] center = widgetCenter(context, matches);
+		TestSupport.moveCursor(context, center[0], center[1]);
+		context.waitTicks(2);
+	}
+
+	/** The center, in GUI coordinates, of the first widget of the open screen that matches. */
+	private static double[] widgetCenter(final ClientGameTestContext context, final Predicate<AbstractWidget> matches) {
+		return context.computeOnClient(client -> {
 			AbstractWidget widget = widgets(client).stream()
 					.filter(matches)
 					.findFirst()
-					.orElseThrow(() -> new AssertionError("widget to click not found"));
+					.orElseThrow(() -> new AssertionError("no matching widget on the screen"));
 			return new double[] {widget.getX() + widget.getWidth() / 2.0, widget.getY() + widget.getHeight() / 2.0};
 		});
-		TestSupport.click(context, center, InputConstants.MOUSE_BUTTON_LEFT);
 	}
 
 	private static boolean settingsActive(final ClientGameTestContext context) {

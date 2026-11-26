@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- A mode button at the top of the settings screen: Disabled turns every feature off, Custom (the default) applies the settings on the screen, and OneConfig applies the settings from OneConfig.
+- A mode button at the top of the settings screen: Disabled turns every feature off, Custom applies the settings on the screen, and OneConfig applies the settings from OneConfig. OneConfig mode is the default when OneConfig is installed; without it, the custom settings apply.
 - Optional OneConfig integration that manages the settings in OneConfig mode.
 - An unbound key binding that opens the settings screen while playing.
 

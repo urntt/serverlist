@@ -11,11 +11,14 @@ public enum ConfigMode {
 	@SerializedName("disabled")
 	DISABLED("disabled"),
 
-	/** The mod's own settings apply. */
+	/** The mod's own settings apply. Also applies in OneConfig mode while OneConfig is not installed. */
 	@SerializedName("custom")
 	CUSTOM("custom"),
 
-	/** The settings registered with OneConfig apply. Only available while OneConfig is installed. */
+	/**
+	 * The settings registered with OneConfig apply. The default mode; it is only offered while OneConfig is installed
+	 * and behaves like {@link #CUSTOM} otherwise.
+	 */
 	@SerializedName("oneconfig")
 	ONECONFIG("oneconfig");
 

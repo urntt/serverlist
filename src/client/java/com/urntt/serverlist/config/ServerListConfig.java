@@ -21,6 +21,9 @@ public final class ServerListConfig implements ServerListSettings {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerListClient.MOD_ID);
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+	/** The mode until the player picks another; it falls back to custom while OneConfig is not installed. */
+	public static final ConfigMode DEFAULT_MODE = ConfigMode.ONECONFIG;
+
 	private final Path path;
 	private final Settings settings;
 
@@ -56,12 +59,18 @@ public final class ServerListConfig implements ServerListSettings {
 		}
 	}
 
-	/** The mode stored in the file, which may name OneConfig even while OneConfig is not installed. */
+	/**
+	 * The mode stored in the file. It is OneConfig until the player picks another mode, and may name OneConfig even
+	 * while OneConfig is not installed.
+	 */
 	public ConfigMode storedMode() {
 		return this.settings.mode;
 	}
 
-	/** The mode that applies: OneConfig mode falls back to custom settings while OneConfig is not available. */
+	/**
+	 * The mode that applies: OneConfig mode falls back to the custom settings while OneConfig is not available, so by
+	 * default OneConfig applies when it is installed and the custom settings apply otherwise.
+	 */
 	public ConfigMode effectiveMode() {
 		ConfigMode mode = this.settings.mode;
 		return mode == ConfigMode.ONECONFIG && !OneConfigBridge.isAvailable() ? ConfigMode.CUSTOM : mode;
@@ -160,7 +169,7 @@ public final class ServerListConfig implements ServerListSettings {
 	 * The serialized form. Field initializers are the defaults, which also apply to keys missing from the file.
 	 */
 	private static final class Settings {
-		private ConfigMode mode = ConfigMode.CUSTOM;
+		private ConfigMode mode = DEFAULT_MODE;
 		private boolean dragToReorder = SettingValues.DEFAULTS.dragToReorder();
 		private boolean pauseMenuButton = SettingValues.DEFAULTS.pauseMenuButton();
 		private boolean searchBox = SettingValues.DEFAULTS.searchBox();
@@ -171,7 +180,7 @@ public final class ServerListConfig implements ServerListSettings {
 		/** Replaces a mode that a hand-edited file left empty or misspelled. */
 		private Settings normalized() {
 			if (this.mode == null) {
-				this.mode = ConfigMode.CUSTOM;
+				this.mode = DEFAULT_MODE;
 			}
 			return this;
 		}

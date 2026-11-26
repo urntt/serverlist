@@ -47,10 +47,10 @@ Open the settings screen from Mod Menu, or bind **Open Server List Settings** in
 | Mode | Effect |
 | --- | --- |
 | Disabled | Every feature is off: the server list, the pause menu and server pings work like vanilla, and the Edit Server, Delete Server and Open Server List bindings do nothing. Widgets that other mods add to the Add Server and Edit Server Info screens are still arranged, because those mods rely on it. |
-| Custom (default) | The settings on this screen apply. |
-| OneConfig | The settings registered with OneConfig apply, and are changed in OneConfig. This screen shows them greyed out and links to the mod's OneConfig page. Turning the mod off on its OneConfig card works like Disabled. Only offered when OneConfig is installed. |
+| Custom | The settings on this screen apply. |
+| OneConfig (default) | The settings registered with OneConfig apply, and are changed in OneConfig. This screen shows them greyed out and links to the mod's OneConfig page. Turning the mod off on its OneConfig card works like Disabled. Only offered when OneConfig is installed. |
 
-If OneConfig mode is selected but OneConfig is later removed, the custom settings apply until you pick another mode.
+OneConfig mode is the default, but it needs OneConfig: without OneConfig, the mode button shows Custom and the custom settings apply. Once OneConfig is installed, OneConfig mode applies, unless you have picked another mode.
 
 In custom mode, every feature that changes vanilla behavior can be turned off. All of them are on by default. Settings are saved to `config/serverlist.json` as soon as you change them.
 

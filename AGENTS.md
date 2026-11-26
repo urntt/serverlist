@@ -48,8 +48,8 @@ The mod version itself follows [Semantic Versioning](https://semver.org/); the `
 - Every feature that changes vanilla behavior has a switch in the configuration file, enabled by default. The edit, delete, and open-server-list bindings have no switch: unbinding them turns them off.
 - Configuration mode, shown as the first button of the configuration screen:
   - Disabled: every feature is off. The server list, the pause menu, and server pings work like vanilla, and the edit, delete, and open-server-list bindings do nothing. The shared area on the Add/Edit Server screen stays active, because other mods' widgets rely on it.
-  - Custom (default): the mod's own settings apply.
-  - OneConfig: the settings registered with OneConfig apply, and the mod's own settings are shown greyed out with the values OneConfig currently applies. Turning the mod off on its OneConfig card works like Disabled. This mode is only offered when OneConfig is installed. If the configuration file selects it but OneConfig is missing, the mod behaves as in Custom mode and keeps the saved mode until the player changes it.
+  - Custom: the mod's own settings apply.
+  - OneConfig (default): the settings registered with OneConfig apply, and the mod's own settings are shown greyed out with the values OneConfig currently applies. Turning the mod off on its OneConfig card works like Disabled. This mode is only offered when OneConfig is installed. If the configuration file selects it but OneConfig is missing, the mod behaves as in Custom mode and keeps the saved mode until the player changes it. So by default OneConfig applies when it is installed and the custom settings apply when it is not.
 - A key binding opens the configuration screen. It is unbound by default. Mod Menu opens the same screen.
 - Settings are saved to the configuration file immediately when changed.
 - Possible future features (not planned for now, but not excluded): server groups or folders; periodic automatic refresh with the last known status shown while re-pinging (stale-while-revalidate cache) and deduplicated pings.
