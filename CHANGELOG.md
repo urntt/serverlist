@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.1.0+26.3] - 2026-11-27
+
 ### Added
 
 - A mode button at the top of the settings screen: Disabled turns every feature off, Custom applies the settings on the screen, and OneConfig applies the settings from OneConfig. OneConfig mode is the default when OneConfig is installed; without it, the custom settings apply.
